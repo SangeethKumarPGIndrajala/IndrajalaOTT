@@ -1,0 +1,118 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #111; /* Dark background */
+  background-image: url('../assets/background.jpg');
+  background-size: cover;
+  
+}
+
+.register-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to bottom, #000, #111); /* Dark gradient */
+  padding: 20px;
+
+}
+
+h1 {
+  color: #f00; /* Bright red for heading */
+  font-size: 46pt; /* Roboto Bold 46pt */
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+}
+
+.error-message {
+  color: #f00; /* Bright red for error message */
+  margin-bottom: 15px;
+}
+
+.register-form {
+  width: 100%;
+  max-width: 600px;
+  background: #222; /* Dark gray form background */
+  padding: 50px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #f00; /* Bright red for labels */
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 24pt; /* Roboto Bold 24pt */
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 30px; /* 55% curve for inputs */
+  font-size: 1rem;
+  background-color: #333;
+  color: #ccc;
+}
+
+input:focus {
+  border-color: #f00;
+  outline: none;
+}
+
+.register-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #ff2d72; /* Button background color */
+  color: #fff;
+  border: none;
+  border-radius: 30px; /* 55% curve for the button */
+  cursor: pointer;
+  font-size: 18pt; /* Roboto Medium 18pt */
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+}
+
+.register-button:hover {
+  background-color: #c00;
+}
+
+.login-link {
+  color: #fff; /* White text for login link */
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: block;
+  text-align: center;
+  margin-top: -20px; /* Place directly beneath the button */
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .register-container {
+    padding: 15px;
+  }
+
+  .register-button {
+    padding: 14px;
+  }
+}

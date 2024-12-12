@@ -1,0 +1,29 @@
+// top five
+{
+    "_id": "670c08fb66b82de35b5cc5ce",
+    "movieName": "THE TRAP S1 E2",
+    "rating": "A",
+    "description": "As the thief delves deeper into the woman’s life, he discovers that her fantasies are intricately woven with her experiences of pain and desire, leading him into a labyrinth of emotions he never anticipated. Each room reveals a layer of her psyche, showcasing hidden passions and fears that blur the lines between reality and dreams. Intrigued yet unsettled, he finds himself drawn into her world, grappling with his own unresolved struggles and the moral dilemmas of his actions.",
+    "category": [
+        "Drama,Crime"
+    ],
+    "url": "trap-e2",
+    "movieMobileImage": "/movieImage/1727977432339-618559915-trap grid .png"
+}
+
+// hover
+{
+    "_id": "674982123a9a6e79d52d6bca",
+    "movieName": "MISTRESS GAME E1",
+    "rating": "A",
+    "description": "In this captivating and provocative episode, a confident and commanding mistress takes control in a thrilling game of power dynamics. A reluctant man finds himself drawn into her world, forced to step into a new identity—dressing as a woman and embracing the role of her devoted servant. As the lines between dominance and submission blur, their unconventional relationship unfolds in an enticing exploration of control, vulnerability, and desire.",
+    "category": [
+        "Double Domination , Slave"
+    ],
+    "url": "mistress-game",
+    "movieFullImage": "/movieImage/1732870665120-850913789-MA.jpg",
+    "movieLogoImage": "/movieImage/1732870665132-565574791-FCGH.png",
+    "movieMobileImage": "/movieImage/1732870665134-391978643-MA.jpg",
+    "smallMovieImage": "/movieImage/1732870665139-28435463-MA.jpg"
+}
+

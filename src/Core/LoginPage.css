@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: url('../assets/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #e0e0e0;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+}
+
+h1 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 46pt;
+  color: #ffffff;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.error-message {
+  color: #f44336;
+  margin-bottom: 20px;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 620px; /* Increased the width */
+  padding: 50px; /* Added more padding */
+  background-color: #17161C;
+  border-radius: 20px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-group {
+  margin-bottom: 25px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 24pt;
+  color: #ffffff;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+input {
+  width: 80%; /* Adjusted width for larger screens */
+  max-width: 400px;
+  padding: 14px;
+  border: 1px solid #ffffff;
+  border-radius: 55%; /* Curved border with 55% */
+  background: #ffffff;
+  color: #000000;
+  font-size: 1rem;
+  text-align: center;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+input:focus {
+  outline: none;
+}
+
+.login-button {
+  width: 100%;
+  max-width: 250px;
+  padding: 15px;
+  background-color: #ff2d72;
+  color: #ffffff;
+  border: none;
+  border-radius: 50px; /* Rounded corners */
+  cursor: pointer;
+  font-family: 'Roboto Medium', sans-serif;
+  font-weight: 300;
+  font-size: 18pt;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin: 0 auto;
+}
+
+.login-button:hover {
+  background-color: #e01e61;
+  transform: translateY(-1px);
+}
+
+.register-link,
+.forgot-password-link {
+  display: block;
+  width: 100%; /* Full width */
+  text-align: center; /* Centered text */
+  margin: 10px 0;
+  color: #ffffff;
+  text-decoration: none;
+  font-family: 'Roboto Medium', sans-serif;
+  font-weight: 200;
+  font-size: 18pt;
+}
+
+.register-link:hover,
+.forgot-password-link:hover {
+  text-decoration: none;
+}
+
+/* Media query for mobile responsiveness */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 30px;
+  }
+
+  .login-form {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  input {
+    width: 75%; /* Adjusting width to 75% of screen for mobile */
+    padding: 10px;
+  }
+
+  .login-button {
+    width: 100%;
+  }
+
+  .register-link,
+  .forgot-password-link {
+    display: block;
+    margin: 10px 0;
+  }
+}

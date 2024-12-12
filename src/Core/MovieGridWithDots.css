@@ -1,0 +1,57 @@
+.dots-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 0.5rem;
+  }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dot.active {
+    background-color: #007bff; 
+  }
+
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    z-index: 10; 
+  }
+  
+  .arrow.prev {
+    left: 10px;
+  }
+  
+  .arrow.next {
+    right: 10px;
+  }
+  
+
+  @media (min-width: 1024px) {
+    .arrow.prev {
+      left: -40px; 
+    }
+  }
+  
+  
+  .arrow:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  

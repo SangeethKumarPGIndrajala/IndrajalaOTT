@@ -1,0 +1,218 @@
+.indrajala-page {
+  all: initial;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Arial', sans-serif;
+  background-color: #000000;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #ffffff;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.indrajala-page * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.indrajala-page {
+  --primary-color: #ff0000;
+  --secondary-color: #ff3333;
+  --accent-color: #ff6666;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.indrajala-page .app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 2rem;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.indrajala-page header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.indrajala-page h1 {
+  font-size: 5rem;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 10px;
+  text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.indrajala-page h1.animate {
+  animation: fadeInUp 1s ease-out forwards, pulse 2s infinite;
+}
+
+.indrajala-page main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.indrajala-page .main-message,
+.indrajala-page .sub-message,
+.indrajala-page .tagline,
+.indrajala-page .coming-soon {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.indrajala-page .main-message.animate {
+  animation: fadeInUp 1s ease-out 0.3s forwards;
+}
+
+.indrajala-page .sub-message.animate {
+  animation: fadeInUp 1s ease-out 0.6s forwards;
+}
+
+.indrajala-page .tagline.animate {
+  animation: fadeInUp 1s ease-out 0.9s forwards;
+}
+
+.indrajala-page .coming-soon.animate {
+  animation: fadeInUp 1s ease-out 1.2s forwards;
+}
+
+.indrajala-page .main-message {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  color: var(--secondary-color);
+  text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.5);
+}
+
+.indrajala-page .sub-message {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  background: linear-gradient(45deg, #ffffff, var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.indrajala-page .tagline {
+  font-size: 2rem;
+  font-style: italic;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+  text-shadow: 1px 1px 2px rgba(255, 0, 0, 0.5);
+}
+
+.indrajala-page .coming-soon {
+  font-size: 1.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.indrajala-page .coming-soon::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-color);
+  transform: scaleX(0);
+  transition: transform 0.3s ease-out;
+}
+
+.indrajala-page .coming-soon:hover::after {
+  transform: scaleX(1);
+}
+
+.indrajala-page footer {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  border-top: 1px solid rgba(255, 0, 0, 0.3);
+  padding-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .indrajala-page h1 {
+    font-size: 3.5rem;
+  }
+
+  .indrajala-page .main-message {
+    font-size: 2.5rem;
+  }
+
+  .indrajala-page .sub-message {
+    font-size: 1.8rem;
+  }
+
+  .indrajala-page .tagline {
+    font-size: 1.5rem;
+  }
+
+  .indrajala-page .coming-soon {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .indrajala-page h1 {
+    font-size: 2.5rem;
+  }
+
+  .indrajala-page .main-message {
+    font-size: 2rem;
+  }
+
+  .indrajala-page .sub-message {
+    font-size: 1.5rem;
+  }
+
+  .indrajala-page .tagline {
+    font-size: 1.2rem;
+  }
+
+  .indrajala-page .coming-soon {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .indrajala-page .app {
+    perspective: 1000px;
+  }
+
+  .indrajala-page main {
+    transform-style: preserve-3d;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateZ(0); }
+    50% { transform: translateZ(20px); }
+  }
+}
