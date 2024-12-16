@@ -5,6 +5,7 @@ import {
   toptrending,
   topfiveMovies,
   upcomming,
+  fetchAds,
 } from "../utils/api";
 import {
   GlobalStyle,
@@ -49,6 +50,7 @@ import trending from "../assets/trending.png";
 import upcoming from "../assets/upcoming.png";
 import topfive from "../assets/topfive.png";
 import { MovieGridWithDots } from "./MovieGridWithDots";
+import AdCarousel from "./AdCarousel";
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
@@ -65,6 +67,7 @@ const HomePage = () => {
   const [currentFeaturedMovie, setCurrentFeaturedMovie] = useState(0);
   const navigate = useNavigate();
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [ads, setAds] = useState([]);
 
   useEffect(() => {
     // Function to handle window resize
@@ -100,13 +103,17 @@ const HomePage = () => {
           trendingMoviesData,
           topFiveMoviesData,
           upcomingMoviesData,
+          adData,
         ] = await Promise.all([
           fetchMovies(),
           fetchMovies(), // Fetch Corrosil desktop movies
           toptrending(), // Fetch trending movies
           topfiveMovies(), // Fetch top five movies here
           upcomming(), // Call the upcomming API
+          fetchAds(), // Fetch ads data
         ]);
+        // console.log("Ad data:", adData?.advertisements);
+        setAds(adData?.advertisements);
         setMovies(moviesData);
         setCorrosilDesk(moviesData); // Set Corrosil desktop movies
         setHoverMovies(hoverMoviesData);
@@ -260,7 +267,12 @@ const HomePage = () => {
     <>
       <GlobalStyle />
       <AppContainer>
-        <HamburgerButton onClick={toggleMobileNav} style={screenWidth >=768 ? {display: "none"} : {display: "block"}}>
+        <HamburgerButton
+          onClick={toggleMobileNav}
+          style={
+            screenWidth >= 768 ? { display: "none" } : { display: "block" }
+          }
+        >
           <svg
             width="50px"
             height="50px"
@@ -405,6 +417,9 @@ const HomePage = () => {
             <SectionTitle>
               <img src={trending} alt="Trending" />
             </SectionTitle>
+            {ads?.trendingAd && ads?.trendingAd.length > 0 && (
+              <AdCarousel ads={ads?.trendingAd} screenWidth={screenWidth} />
+            )}
 
             <MovieGridWithDots
               movies={trendingMovies}
@@ -421,7 +436,8 @@ const HomePage = () => {
             <SectionTitle>
               <img src={upcoming} alt="Upcoming" />
             </SectionTitle>
-            
+            {ads?.upcomingAd && ads?.upcomingAd.length > 0 && (<AdCarousel ads={ads?.upcomingAd} screenWidth={screenWidth} />)}
+
             <MovieGridWithDots
               movies={upcomingMovies}
               screenWidth={screenWidth}
@@ -437,7 +453,7 @@ const HomePage = () => {
             <SectionTitle>
               <img src={topfive} alt="Top 5" />
             </SectionTitle>
-            
+            {ads?.topFiveAd && ads?.topFiveAd.length > 0 && (<AdCarousel ads={ads?.topFiveAd} screenWidth={screenWidth} />)}
             <MovieGridWithDots
               movies={topFiveMovies}
               screenWidth={screenWidth}

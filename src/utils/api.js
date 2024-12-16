@@ -26,6 +26,16 @@ export const fetchMovies = async () => {
     return data;
   };
 
+  // Ads API
+
+  export const fetchAds = async () => {
+    const response = await fetch(
+      'https://api.indrajala.in/api/admin/get-advertisements-for-carousel'
+    );
+    const data = await response.json();
+    return data;
+  }
+
 
 
 
