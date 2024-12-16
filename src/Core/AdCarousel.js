@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './AdCarousel.css';
+import axios from 'axios';
 
 function AdCarousel({ ads, screenWidth }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,6 +18,25 @@ function AdCarousel({ ads, screenWidth }) {
     setIsMobileView(screenWidth < 600);
   }, [screenWidth]); 
 
+  const handleAdClick = async()=>{
+    try {
+      const response = await axios.post(
+        'https://api.indrajala.in/api/admin/ad-click',
+        {
+          adId: ads[currentIndex]._id
+        }
+      );
+      console.log(response.data);
+      if(response.status === 200){
+        window.location.href = response?.data?.adURL;
+      }else{
+        alert("URL redirection failed");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="carousel-container">
       <div
@@ -26,16 +46,18 @@ function AdCarousel({ ads, screenWidth }) {
         }}
       >
         {ads.map((item) => (
-          <div className="carousel-item" key={item._id}>
+          <div className="carousel-item" key={item._id} >
             {isMobileView ? (
               <img
                 src={`http://localhost:20000/public/${item.adMobileImage}`}
                 alt={item.adTitle}
+                onClick={handleAdClick}
               />
             ) : (
               <img
                 src={`http://localhost:20000/public/${item.adDesktopImage}`}
                 alt={item.adTitle}
+                onClick={handleAdClick}
               />
             )}
             <div className="carousel-caption">
