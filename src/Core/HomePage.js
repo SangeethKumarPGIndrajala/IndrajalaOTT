@@ -238,7 +238,7 @@ const HomePage = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentFeaturedMovie(
-        (prevIndex) => (prevIndex + 1) % topFiveMovies.length
+        (prevIndex) => (prevIndex + 1) % CorrosilDesk.length
       );
     }, 3000); // Change movie every 3 seconds
 

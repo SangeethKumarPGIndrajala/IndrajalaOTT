@@ -49,13 +49,13 @@ function AdCarousel({ ads, screenWidth }) {
           <div className="carousel-item" key={item._id} >
             {isMobileView ? (
               <img
-                src={`http://localhost:20000/public/${item.adMobileImage}`}
+                src={`https://api.indrajala.in/public${item.adMobileImage}`}
                 alt={item.adTitle}
                 onClick={handleAdClick}
               />
             ) : (
               <img
-                src={`http://localhost:20000/public/${item.adDesktopImage}`}
+                src={`https://api.indrajala.in/public/${item.adDesktopImage}`}
                 alt={item.adTitle}
                 onClick={handleAdClick}
               />
