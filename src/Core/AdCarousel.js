@@ -9,7 +9,7 @@ function AdCarousel({ ads, screenWidth }) {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % ads.length);
-    }, 2000);
+    }, 30000);
     return () => clearInterval(timer);
   }, [ads.length]); 
 
