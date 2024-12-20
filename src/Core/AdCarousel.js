@@ -60,9 +60,9 @@ function AdCarousel({ ads, screenWidth }) {
                 onClick={handleAdClick}
               />
             )}
-            <div className="carousel-caption">
-              <h3>{item.adTitle}</h3>
-            </div>
+            {/*<div className="carousel-caption">
+              <h3>{item.adTitle}</h3> 
+            </div>*/}
           </div>
         ))}
       </div>
