@@ -43,7 +43,8 @@ video {
   padding: 10px;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Ensure controls are horizontally aligned */
+  justify-content: space-between; /* Space out the controls */
   align-items: center;
   width: 100%;
   transition: opacity 0.5s ease;
@@ -51,7 +52,6 @@ video {
 
 .controls.hidden {
   opacity: 0;
-  
 }
 
 .controls.visible {
@@ -59,30 +59,17 @@ video {
 }
 
 .progress-bar-container {
-  flex-grow: 1;
-  width: 95vw; /* 80% of the viewport width */
+  width: 80%; /* Set the width to 80% of the container */
   margin-bottom: 7px;
   display: flex;
   justify-content: center; /* Center the progress bar */
 }
 
 .progress-bar {
-  width: 95%; /* Set the width to 80% of the progress-bar-container */
-  height: 0.1px; /* Reduce height to 1/4th of the current height */
+  width: 100%; /* Full width of the progress-bar-container */
+  height: 4px;
   background: rgba(255, 255, 255, 0.3);
 }
-
-.progress-bar::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  background: red;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-
-
 
 .progress-bar::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -105,7 +92,7 @@ video {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 20%; /* Adjust width to make space for other controls */
 }
 
 button {
@@ -116,11 +103,6 @@ button {
   cursor: pointer;
   padding: 5px;
   margin: 0 5px;
-}
-
-/* Ensure all buttons are visible */
-button:not(.progress-bar) {
-  display: block;
 }
 
 .volume-control {
@@ -189,13 +171,44 @@ button:not(.progress-bar) {
 /* Mobile Responsive */
 @media (max-width: 480px) {
   .controls {
-    flex-direction: column;
+    flex-direction: column; /* Stack controls vertically on small screens */
+    justify-content: center;
+    align-items: center;
   }
 
   .button-container {
-    flex-direction: row; /* Ensure buttons are in a single row */
-    justify-content: space-between;
+    display: flex !important;
+    flex-direction: row !important; /* Stack the buttons horizontally */
     width: 100%;
+    justify-content: space-between;
     margin-top: 10px;
   }
+
+  .progress-bar-container {
+    width: 100%; /* Use full width on small screens */
+  }
+
+  .volume-slider {
+    width: 100%; /* Allow volume slider to stretch on small screens */
+  }
+}
+
+.ad-progress-bar-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.ad-progress-bar-container input{
+  z-index: 1;
+}
+
+.ad-progress-bar-container p{
+  z-index: 1;
+
+}
+
+.ad-progress-bar-container button{
+  z-index: 1;
 }

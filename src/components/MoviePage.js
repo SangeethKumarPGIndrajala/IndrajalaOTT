@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import './TrailerPage.css';
+import React, { useEffect, useState, useRef } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import "./TrailerPage.css";
 
 const TrailerPage = () => {
   const { movieId } = useParams();
@@ -13,46 +13,53 @@ const TrailerPage = () => {
   const [volume, setVolume] = useState(1);
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState(0);
-  const [currentTime, setCurrentTime] = useState('0:00');
-  const [duration, setDuration] = useState('0:00');
+  const [currentTime, setCurrentTime] = useState("0:00");
+  const [duration, setDuration] = useState("0:00");
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [controlsVisible, setControlsVisible] = useState(true); // State to manage controls visibility
+  const [adUrl, setAdUrl] = useState(null);
+  const [isAdPlaying, setIsAdPlaying] = useState(true);
+  const [showSkipButton, setShowSkipButton] = useState(false);
 
+  const adVideoRef = useRef(null);
   useEffect(() => {
     const fetchTrailer = async () => {
-      const storedToken = localStorage.getItem('token');
-      const viewId = localStorage.getItem('MovieIDView');
+      const storedToken = localStorage.getItem("token");
+      const viewId = localStorage.getItem("MovieIDView");
 
       if (!storedToken) {
-        setError('Authentication details missing');
-        navigate('/');
+        setError("Authentication details missing");
+        navigate("/");
         return;
       }
 
       // Check token validity using API
       const checkTokenValidity = async () => {
         try {
-          const response = await fetch('https://api.indrajala.in/api/user/checkexp', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ token: storedToken }),
-          });
+          const response = await fetch(
+            "https://api.indrajala.in/api/user/checkexp",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ token: storedToken }),
+            }
+          );
 
           const data = await response.json();
 
           if (response.ok && data.isValid) {
-            console.log('Token is valid');
+            console.log("Token is valid");
           } else {
-            setError('Token has expired');
-            navigate('/');
+            setError("Token has expired");
+            navigate("/");
             return;
           }
         } catch (error) {
-          console.error('Error checking token validity:', error);
-          setError('Error validating token');
-          navigate('/');
+          console.error("Error checking token validity:", error);
+          setError("Error validating token");
+          navigate("/");
           return;
         }
       };
@@ -63,27 +70,93 @@ const TrailerPage = () => {
       const movieToFetch = viewId;
 
       if (!movieToFetch) {
-        setError('Movie ID is undefined');
-        navigate('/');
+        setError("Movie ID is undefined");
+        navigate("/");
         return;
       }
 
       // Fetch trailer URL for the movie
       try {
-        const response = await fetch(`https://api.indrajala.in/api/user/DeltaFetchMovie/${movieToFetch}`);
+        const response = await fetch(
+          `https://api.indrajala.in/api/user/DeltaFetchMovie/${movieToFetch}`
+        );
         if (!response.ok) {
-          throw new Error('Failed to fetch trailer');
+          throw new Error("Failed to fetch trailer");
         }
         const data = await response.json();
         const fullTrailerUrl = `https://api.indrajala.in/public${data.movieVideo}`;
         setTrailerUrl(fullTrailerUrl);
       } catch (error) {
-        setError('Error fetching trailer: ' + error.message);
+        setError("Error fetching trailer: " + error.message);
       }
     };
-
+    const fetchAd = async () => {
+      try {
+        const response = await fetch(
+          "https://api.indrajala.in/api/admin/get-random-full-video-ad"
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch ad");
+        }
+        const data = await response.json();
+        const adPath =
+          "https://api.indrajala.in/public" + data?.randomFullVideoAd?.adURL;
+        setAdUrl(adPath);
+      } catch (error) {
+        setError("Error fetching ad: " + error.message);
+      }
+    };
     fetchTrailer();
+    fetchAd();
   }, [movieId, navigate]);
+
+  useEffect(() => {
+    if (adUrl && isAdPlaying && adVideoRef.current) {
+      adVideoRef.current.src = adUrl;
+      adVideoRef.current
+        .play()
+        .catch((error) => console.error("Error playing ad:", error));
+    }
+  }, [adUrl, isAdPlaying]);
+
+  const handleAdEnd = () => {
+    setIsAdPlaying(false);
+    setAdUrl(null); // Reset ad URL
+    setIsPlaying(true); // Start the trailer
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSkipButton(true);
+    }, 3000); // 3 seconds delay
+
+    // Cleanup the timer when the component unmounts
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handlePlay = () => {
+    if (isPlaying) {
+      videoRef.current.src = trailerUrl;
+      videoRef.current
+        .play()
+        .catch((error) => console.error("Error playing trailer:", error));
+    }
+  };
+
+  useEffect(() => {
+    if (isPlaying) {
+      handlePlay();
+    }
+  }, [isPlaying]);
+
+  const updateAdProgress = () => {
+    if (adVideoRef.current) {
+      const progressValue =
+        (adVideoRef.current.currentTime / adVideoRef.current.duration) * 100;
+      setProgress(progressValue);
+      setCurrentTime(formatTime(adVideoRef.current.currentTime));
+    }
+  };
 
   useEffect(() => {
     let fadeOutTimer;
@@ -140,7 +213,8 @@ const TrailerPage = () => {
   // Update progress based on the current video time
   const updateProgress = () => {
     if (videoRef.current) {
-      const progressValue = (videoRef.current.currentTime / videoRef.current.duration) * 100;
+      const progressValue =
+        (videoRef.current.currentTime / videoRef.current.duration) * 100;
       setProgress(progressValue);
       setCurrentTime(formatTime(videoRef.current.currentTime));
     }
@@ -150,7 +224,7 @@ const TrailerPage = () => {
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
   // Set video duration when metadata is loaded
@@ -185,9 +259,9 @@ const TrailerPage = () => {
       setIsFullScreen(!!document.fullscreenElement);
     };
 
-    document.addEventListener('fullscreenchange', handleFullScreenChange);
+    document.addEventListener("fullscreenchange", handleFullScreenChange);
     return () => {
-      document.removeEventListener('fullscreenchange', handleFullScreenChange);
+      document.removeEventListener("fullscreenchange", handleFullScreenChange);
     };
   }, []);
 
@@ -216,7 +290,7 @@ const TrailerPage = () => {
 
   // Control Panel for the video
   const ControlPanel = () => (
-    <div className={`controls ${controlsVisible ? 'visible' : 'hidden'}`}>
+    <div className={`controls ${controlsVisible ? "visible" : "hidden"}`}>
       <div className="progress-bar-container">
         <input
           type="range"
@@ -229,17 +303,31 @@ const TrailerPage = () => {
       </div>
       <div className="button-container">
         <div className="volume-control">
-          <span className="time-display">{currentTime} / {duration}</span>
-          <button onClick={handlePlayPause} className="play-pause" aria-label="Play/Pause">
-            {isPlaying ? '❚❚' : '▶'}
+          <span className="time-display">
+            {currentTime} / {duration}
+          </span>
+          <button
+            onClick={handlePlayPause}
+            className="play-pause"
+            aria-label="Play/Pause"
+          >
+            {isPlaying ? "❚❚" : "▶"}
           </button>
 
-          <button onClick={handleMute} className="mute" aria-label="Mute/Unmute">
-            {isMuted ? '🔇' : '🔊'}
+          <button
+            onClick={handleMute}
+            className="mute"
+            aria-label="Mute/Unmute"
+          >
+            {isMuted ? "🔇" : "🔊"}
           </button>
 
-          <button onClick={toggleFullScreen} className="fullscreen" aria-label="Toggle Fullscreen">
-            {isFullScreen ? '⤓' : '⤢'}
+          <button
+            onClick={toggleFullScreen}
+            className="fullscreen"
+            aria-label="Toggle Fullscreen"
+          >
+            {isFullScreen ? "⤓" : "⤢"}
           </button>
         </div>
       </div>
@@ -247,34 +335,55 @@ const TrailerPage = () => {
   );
 
   return (
-    <div
-      className="container"
-      ref={containerRef}
-      onDoubleClick={handleDoubleTap}
-      onClick={handleSingleTap}
-    >
-      {trailerUrl ? (
-        <div className="video-container" onClick={handleContainerClick}>
+    <div className="container" ref={containerRef}>
+      {adUrl && isAdPlaying ? (
+        <div className="video-container">
+          <video
+            ref={adVideoRef}
+            onEnded={handleAdEnd}
+            muted
+            onTimeUpdate={updateAdProgress} // Update progress of the ad
+            className="video-element"
+            disablePictureInPicture
+            onContextMenu={(e) => e.preventDefault()}
+          />
+          <div className="ad-progress-bar-container">
+            <p>Advertisement</p>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={progress}
+              className="progress-bar"
+              disabled
+            />
+            {showSkipButton && <button style={{backgroundColor:"white", color:"black"}} onClick={handleAdEnd}>Skip Ad</button>}
+          </div>
+        </div>
+      ) : trailerUrl ? (
+        <div
+          className="video-container"
+          onClick={() => setControlsVisible(true)}
+        >
           <video
             ref={videoRef}
             src={trailerUrl}
-            onError={(e) => setError('Error loading video: ' + e.target.error.message)}
+            onError={(e) =>
+              setError("Error loading video: " + e.target.error.message)
+            }
             onTimeUpdate={updateProgress}
             onLoadedMetadata={handleLoadedMetadata}
             controls={false}
-            controlsList="nodownload nofullscreen noremoteplayback"
             disablePictureInPicture
-            onContextMenu={(e) => e.preventDefault()} // Disable right-click context menu
+            onContextMenu={(e) => e.preventDefault()}
             className="video-element"
           />
-          {/* Overlay to prevent direct interactions that might lead to downloading */}
-          <div className="video-overlay" />
           <ControlPanel />
         </div>
       ) : error ? (
         <div className="error">{error}</div>
       ) : (
-        <div className="loading">Loading Trailer...</div>
+        <div className="loading">Loading...</div>
       )}
     </div>
   );
