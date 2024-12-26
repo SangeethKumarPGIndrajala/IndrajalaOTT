@@ -341,7 +341,6 @@ const TrailerPage = () => {
           <video
             ref={adVideoRef}
             onEnded={handleAdEnd}
-            muted
             onTimeUpdate={updateAdProgress} // Update progress of the ad
             className="video-element"
             disablePictureInPicture
