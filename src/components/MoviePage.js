@@ -20,6 +20,7 @@ const TrailerPage = () => {
   const [adUrl, setAdUrl] = useState(null);
   const [isAdPlaying, setIsAdPlaying] = useState(true);
   const [showSkipButton, setShowSkipButton] = useState(false);
+  const [adRedirectURL, setAdRedirectURL] = useState(null);
 
   const adVideoRef = useRef(null);
   useEffect(() => {
@@ -100,7 +101,9 @@ const TrailerPage = () => {
         }
         const data = await response.json();
         const adPath =
-          "https://api.indrajala.in/public" + data?.randomFullVideoAd?.adURL;
+          encodeURI("https://api.indrajala.in/public" + data?.randomFullVideoAd?.adURL);
+        const adRedirect = data.randomFullVideoAd.adRedirectURL ? data?.randomFullVideoAd?.adRedirectURL : null;
+        setAdRedirectURL(adRedirect);
         setAdUrl(adPath);
       } catch (error) {
         setError("Error fetching ad: " + error.message);
@@ -158,6 +161,12 @@ const TrailerPage = () => {
     }
   };
 
+  // handle ad click
+  const handleAdClick = () => {
+    if (adRedirectURL) {
+      window.open(adRedirectURL, '_blank');
+    }
+  };
   useEffect(() => {
     let fadeOutTimer;
 
@@ -333,7 +342,7 @@ const TrailerPage = () => {
       </div>
     </div>
   );
-
+  // console.log("Ad redirect URL", adRedirectURL);
   return (
     <div className="container" ref={containerRef}>
       {adUrl && isAdPlaying ? (
@@ -345,6 +354,7 @@ const TrailerPage = () => {
             className="video-element"
             disablePictureInPicture
             onContextMenu={(e) => e.preventDefault()}
+            onClick={handleAdClick}
           />
           <div className="ad-progress-bar-container">
             <p>Advertisement</p>

@@ -17,6 +17,7 @@ const TrailerPage = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [controlsVisible, setControlsVisible] = useState(true);
   const [error, setError] = useState(null);
+  const [adRedirectURL, setAdRedirectURL] = useState(null);
 
   const videoRef = useRef(null);
   const adVideoRef = useRef(null);
@@ -46,8 +47,10 @@ const TrailerPage = () => {
           throw new Error('Failed to fetch ad');
         }
         const data = await response.json();
-        const adPath = 'https://api.indrajala.in/public' + data?.randomTrailerAd?.adURL;
+        const adPath = encodeURI('https://api.indrajala.in/public' + data?.randomTrailerAd?.adURL);
         setAdUrl(adPath);
+        const adRedirect = data?.randomTrailerAd?.adRedirectURL ? data?.randomTrailerAd?.adRedirectURL : null;
+        setAdRedirectURL(adRedirect);
       } catch (error) {
         setError('Error fetching ad: ' + error.message);
       }
@@ -121,6 +124,13 @@ const TrailerPage = () => {
     }
   };
 
+    // handle ad click
+    const handleAdClick = () => {
+      if (adRedirectURL) {
+        window.open(adRedirectURL, '_blank');
+      }
+    };
+
   const updateProgress = () => {
     if (videoRef.current) {
       const progressValue = (videoRef.current.currentTime / videoRef.current.duration) * 100;
@@ -183,7 +193,7 @@ const TrailerPage = () => {
       </div>
     </div>
   );
-
+  // console.log("Ad URL ", adUrl);
   return (
     <div className="container" ref={containerRef}>
       {adUrl && isAdPlaying ? (
@@ -195,6 +205,7 @@ const TrailerPage = () => {
             className="video-element"
             disablePictureInPicture
             onContextMenu={(e) => e.preventDefault()}
+            onClick={handleAdClick}
           />
           <div className="ad-progress-bar-container">
             <p>Advertisement</p>
