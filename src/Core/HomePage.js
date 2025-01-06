@@ -420,6 +420,15 @@ const HomePage = () => {
             {ads?.trendingAd && ads?.trendingAd.length > 0 && (
               <AdCarousel ads={ads?.trendingAd} screenWidth={screenWidth} />
             )}
+            <marquee behaviour="scroll" direction="left">
+              <p>
+                <b>
+                Incase of any failure related to Indrajala subscription, kindly logout and login again. If the
+                issue persists, contact us at{" "}
+                <a href="tel:919995472709" style={{textDecoration:"none", color:"white"}}>+91-9995472709</a>
+                </b>
+              </p>
+            </marquee>
 
             <MovieGridWithDots
               movies={trendingMovies}
@@ -436,7 +445,9 @@ const HomePage = () => {
             <SectionTitle>
               <img src={upcoming} alt="Upcoming" />
             </SectionTitle>
-            {ads?.upcomingAd && ads?.upcomingAd.length > 0 && (<AdCarousel ads={ads?.upcomingAd} screenWidth={screenWidth} />)}
+            {ads?.upcomingAd && ads?.upcomingAd.length > 0 && (
+              <AdCarousel ads={ads?.upcomingAd} screenWidth={screenWidth} />
+            )}
 
             <MovieGridWithDots
               movies={upcomingMovies}
@@ -453,7 +464,9 @@ const HomePage = () => {
             <SectionTitle>
               <img src={topfive} alt="Top 5" />
             </SectionTitle>
-            {ads?.topFiveAd && ads?.topFiveAd.length > 0 && (<AdCarousel ads={ads?.topFiveAd} screenWidth={screenWidth} />)}
+            {ads?.topFiveAd && ads?.topFiveAd.length > 0 && (
+              <AdCarousel ads={ads?.topFiveAd} screenWidth={screenWidth} />
+            )}
             <MovieGridWithDots
               movies={topFiveMovies}
               screenWidth={screenWidth}
